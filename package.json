@@ -1,17 +1,20 @@
 {
   "name": "webhook-pipeline",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "worker": "ts-node src/worker/worker.ts",
+    "worker:prod": "node dist/worker/worker.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.13.6",
     "bullmq": "^5.71.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",

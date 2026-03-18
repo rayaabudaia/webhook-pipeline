@@ -14,3 +14,38 @@ services:
     container_name: pipeline_redis
     ports:
       - "6379:6379"
+
+  api:
+    build: .
+    container_name: pipeline_api
+    command: npm start
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: pipelines
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "3000:3000"
+
+  worker:
+    build: .
+    container_name: pipeline_worker
+    command: npm run worker:prod
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: pipelines
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
